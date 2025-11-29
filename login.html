@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>تسجيل الدخول</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="auth-container">
+    <h2>🔐 تسجيل الدخول</h2>
+    <form id="loginForm" class="auth-form">
+      <label>البريد الإلكتروني
+        <input type="email" id="loginEmail" required>
+      </label>
+      <label>كلمة المرور
+        <input type="password" id="loginPassword" required>
+      </label>
+      <button type="submit" class="btn-primary">دخول</button>
+      <p class="form-note">لا تملك حساباً؟ <a href="register.html">إنشئ حساب</a></p>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      const user = users.find(u => u.email === email && u.password === password);
+      if (user) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        alert('✅ تم تسجيل الدخول بنجاح');
+        window.location.href = 'index.html';
+      } else {
+        alert('❌ البريد أو كلمة المرور غير صحيحة');
+      }
+    });
+  </script>
+</body>
+</html>
