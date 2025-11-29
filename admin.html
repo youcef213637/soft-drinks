@@ -8,6 +8,7 @@
 <body>
   <main class="admin-container">
     <h2>📦 الطلبات</h2>
+
     <div class="admin-login" id="adminLogin">
       <p>أدخل كلمة مرور الإدارة:</p>
       <input type="password" id="adminPass" placeholder="••••••">
@@ -17,8 +18,12 @@
     <div id="orders" class="orders hidden"></div>
   </main>
 
+  <footer>
+    <p>© 2025 متجر المشروبات الغازية والعصائر</p>
+  </footer>
+
   <script>
-    const ADMIN_PASSWORD = 'nadji066912'; // غيّرها لما تريد
+    const ADMIN_PASSWORD = '123456'; // غيّرها لما تريد
 
     document.getElementById('adminEnter').addEventListener('click', () => {
       const pass = document.getElementById('adminPass').value;
@@ -26,6 +31,7 @@
         alert('❌ كلمة المرور غير صحيحة');
         return;
       }
+
       document.getElementById('adminLogin').classList.add('hidden');
       loadOrders();
     });

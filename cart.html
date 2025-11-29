@@ -35,7 +35,9 @@
   </footer>
 
   <script>
-    function formatCurrency(v) { return v + ' دج'; }
+    function formatCurrency(v) {
+      return v + ' دج';
+    }
 
     function renderCart() {
       const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -84,32 +86,34 @@
       });
 
       document.getElementById('checkout').addEventListener('click', () => {
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-        if (cart.length === 0) {
-          alert('السلة فارغة.');
-          return;
-        }
-
+        const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
         const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
         if (!user.email) {
           alert('⚠️ يجب تسجيل الدخول أولاً قبل إتمام الشراء.');
           window.location.href = 'login.html';
           return;
         }
 
+        if (cartItems.length === 0) {
+          alert('❌ السلة فارغة، أضف منتجات أولاً.');
+          return;
+        }
+
         const orders = JSON.parse(localStorage.getItem('orders') || '[]');
         const order = {
           customer: user,
-          items: cart,
-          total: cart.reduce((sum, i) => sum + i.price * i.quantity, 0),
+          items: cartItems,
+          total: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
           date: new Date().toLocaleString()
         };
+
         orders.push(order);
         localStorage.setItem('orders', JSON.stringify(orders));
-
-        alert('✅ تم إرسال الطلب، شكراً لك يا ' + user.name);
         localStorage.removeItem('cart');
         renderCart();
+
+        alert('✅ تم إرسال الطلب، شكراً لك يا ' + user.name);
       });
     });
   </script>
